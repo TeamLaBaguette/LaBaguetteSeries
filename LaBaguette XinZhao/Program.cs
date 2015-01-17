@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections.Generic;
 using LeagueSharp;
 using LeagueSharp.Common;
-using Color = System.Drawing.Color;
 #endregion
 
 namespace LaBaguette_XinZhao
@@ -52,6 +51,10 @@ namespace LaBaguette_XinZhao
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
         }
 
+
+        /////////////////////////////////////////
+        //             ON GAME LOAD            //
+        /////////////////////////////////////////
         static void Game_OnGameLoad(EventArgs args)
         {
             if (Player.BaseSkinName != ChampionName) return;
@@ -61,26 +64,32 @@ namespace LaBaguette_XinZhao
             W = new Spell(SpellSlot.W);
             E = new Spell(SpellSlot.E, 600);
             R = new Spell(SpellSlot.R, 480);
-            AssemblyMenu();
+            LaBaguetteMenu();
 
             Game.OnGameUpdate += Game_OnGameUpdate;
             Drawing.OnDraw += Drawing_OnDraw;
             Interrupter.OnPossibleToInterrupt += Interrupter_OnPosibleToInterrupt;
 
-            WelcomeMessage();
+            MessageBienvenue();
         }
 
 
         /////////////////////////////////////////
         //            MENU ASSEMBLY            //
         /////////////////////////////////////////
-        private static void AssemblyMenu()
+        private static void LaBaguetteMenu()
         {
             Config = new Menu("LaBaguette XinZhao", ChampionName, true);
 
+            /////////////////////////
+            //    MENU ORBWALKER   //
+            /////////////////////////
             Config.AddSubMenu(new Menu("Orbwalker", "Orbwalker"));
             Orbwalker = new Orbwalking.Orbwalker(Config.SubMenu("Orbwalker"));
 
+            /////////////////////////
+            //    MENU TARGETSEL   //
+            /////////////////////////
             TargetSelectorMenu = new Menu("Target Selector", "Target Selector");
             TargetSelector.AddToMenu(TargetSelectorMenu);
             Config.AddSubMenu(TargetSelectorMenu);
@@ -188,7 +197,6 @@ namespace LaBaguette_XinZhao
                 MenuNonTargetedItems.AddItem(new MenuItem("item3131", "Sword of the Divine").SetValue(true));
                 MenuNonTargetedItems.AddItem(new MenuItem("item3074", "Ravenous Hydra").SetValue(true));
                 MenuNonTargetedItems.AddItem(new MenuItem("item3142", "Youmuu's Ghostblade").SetValue(true));
-
                 Config.AddToMainMenu();
         }
 
