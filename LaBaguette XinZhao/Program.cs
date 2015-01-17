@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using LeagueSharp;
 using LeagueSharp.Common;
+using SharpDX;
 #endregion
 
 namespace LaBaguette_XinZhao
@@ -207,10 +208,14 @@ namespace LaBaguette_XinZhao
         /////////////////////////////////////////
         public static void InstaBCombo()
         {
+            /////////////////////////
+            //      VARIABLES      //
+            /////////////////////////
             var t = GetEnemy(Q.Range, TargetSelector.DamageType.Magical);
-            var useQ = Config.Item("ComboPreQ").GetValue<bool>();
-            var useW = Config.Item("ComboUseW").GetValue<bool>();
-            var useE = Config.Item("ComboUseE").GetValue<bool>();
+            var PreQ = Config.Item("InstaBComboPreQ").GetValue<bool>();
+            var useW = Config.Item("InstaBComboUseW").GetValue<bool>();
+            var useE = Config.Item("InstaBComboUseE").GetValue<bool>();
+
 
             if (useQ && t.IsValidTarget(E.Range) && Q.IsReady())
                 Q.Cast();
