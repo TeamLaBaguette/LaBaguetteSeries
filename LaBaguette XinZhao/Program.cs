@@ -94,7 +94,7 @@ namespace LaBaguette_XinZhao
                 //    SUBMENU COMBO    //
                 //     INSTAB COMBO    //
                 /////////////////////////
-                Config.AddSubMenu(new Menu("InstaBCombo", "InstaBCombo"));
+                Config.AddSubMenu(new Menu("BasicCombo", "BasicCombo"));
                     Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboUseQ", "Use Q").SetValue(true));
                     Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboUseW", "Use W").SetValue(true));
                     Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboUseE", "Use E").SetValue(true));
@@ -117,41 +117,41 @@ namespace LaBaguette_XinZhao
                             .SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Press)));
 
             /////////////////////////
-            //      MENU COMBO     //
+            //    MENU LANECLEAR   //
             /////////////////////////
             Config.AddSubMenu(new Menu("LaneClear", "LaneClear"));
-            Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseQ", "Use Q").SetValue(false));
-            Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseW", "Use W").SetValue(false));
-            Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseE", "Use E").SetValue(false));
-            Config.SubMenu("LaneClear")
-                .AddItem(new MenuItem("LaneClearMana", "Min. Mana Percent: ").SetValue(new Slider(50, 100, 0)));
-            Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearActive", "LaneClear!")
-                .SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
+                Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseQ", "Use Q").SetValue(false));
+                Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseW", "Use W").SetValue(false));
+                Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseE", "Use E").SetValue(false));
+                Config.SubMenu("LaneClear")
+                    .AddItem(new MenuItem("LaneClearMana", "Min. Mana Percent: ").SetValue(new Slider(50, 100, 0)));
+                Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearActive", "LaneClear!")
+                    .SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
             /////////////////////////
-            //      MENU COMBO     //
+            //   MENU JUNGLEFARM   //
             /////////////////////////
             Config.AddSubMenu(new Menu("JungleFarm", "JungleFarm"));
-            Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseQ", "Use Q").SetValue(true));
-            Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseW", "Use W").SetValue(false));
-            Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseE", "Use E").SetValue(false));
-            Config.SubMenu("JungleFarm")
-                .AddItem(new MenuItem("JungleFarmMana", "Min. Mana Percent: ").SetValue(new Slider(50, 100, 0)));
-            Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmActive", "JungleFarm!")
-                .SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
+                Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseQ", "Use Q").SetValue(true));
+                Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseW", "Use W").SetValue(false));
+                Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseE", "Use E").SetValue(false));
+                Config.SubMenu("JungleFarm")
+                    .AddItem(new MenuItem("JungleFarmMana", "Min. Mana Percent: ").SetValue(new Slider(50, 100, 0)));
+                Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmActive", "JungleFarm!")
+                    .SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
             /////////////////////////
             //     MENU DRAWING    //
             /////////////////////////
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
-            Config.SubMenu("Drawings")
-                .AddItem(new MenuItem("DrawQRange", "Q Range").SetValue(new Circle(false, Color.PowderBlue)));
-            Config.SubMenu("Drawings")
-                .AddItem(new MenuItem("DrawERange", "E Range").SetValue(new Circle(false, Color.PowderBlue)));
-            Config.SubMenu("Drawings")
-                .AddItem(new MenuItem("DrawRRange", "R Range").SetValue(new Circle(false, Color.PowderBlue)));
-            Config.SubMenu("Drawings")
-                .AddItem(new MenuItem("DrawThrown", "Can be thrown enemy").SetValue(new Circle(false, Color.PowderBlue)));
+                Config.SubMenu("Drawings")
+                    .AddItem(new MenuItem("DrawQRange", "Q Range").SetValue(new Circle(false, Color.PowderBlue)));
+                Config.SubMenu("Drawings")
+                    .AddItem(new MenuItem("DrawERange", "E Range").SetValue(new Circle(false, Color.PowderBlue)));
+                Config.SubMenu("Drawings")
+                    .AddItem(new MenuItem("DrawRRange", "R Range").SetValue(new Circle(false, Color.PowderBlue)));
+                Config.SubMenu("Drawings")
+                    .AddItem(new MenuItem("DrawThrown", "Can be thrown enemy").SetValue(new Circle(false, Color.PowderBlue)));
 
             /////////////////////////
             //      MENU EXTRA     //
@@ -189,8 +189,6 @@ namespace LaBaguette_XinZhao
                 MenuNonTargetedItems.AddItem(new MenuItem("item3074", "Ravenous Hydra").SetValue(true));
                 MenuNonTargetedItems.AddItem(new MenuItem("item3142", "Youmuu's Ghostblade").SetValue(true));
 
-                new PotionManager();
-                new AssassinManager();
                 Config.AddToMainMenu();
         }
 
@@ -287,6 +285,10 @@ namespace LaBaguette_XinZhao
                 Tiamat.Cast();
         }
 
+
+        /////////////////////////////////////////
+        //            WELCOME MESSAGE          //
+        /////////////////////////////////////////
         private static void MessageBienvenue()
         {
             Game.PrintChat(String.Format("<font color='#0000FF'>La </font> <font color='#FFFFFF'>Bagu </font> <font color='#FFFFFF'>ette </font><font color='#FFFFFF'>{0}</font> <font color='#70DBDB'>Loaded!</font>", ChampionName));
