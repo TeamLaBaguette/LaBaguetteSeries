@@ -6,7 +6,7 @@ We are french members that want to <b>contribute</b> to the community with our k
 
 Members
 ============
-<font color='#70DBDB'><b>Blowa</b></font>
+<b>Blowa</b>
 <br><b>Hydraks</b>
 <br><b>FoxMan</b>
 <br>

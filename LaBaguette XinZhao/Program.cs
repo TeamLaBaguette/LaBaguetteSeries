@@ -27,7 +27,10 @@ namespace LaBaguette_XinZhao
         ////////////////////////
         //   Declare spells   //
         ////////////////////////
+
+        // Declare SpellList
         public static List<Spell> SpellList = new List<Spell>();
+        // Declare spells
         public static Spell Q, W, E, R;
 
         private static readonly SpellSlot IgniteSlot = Player.GetSpellSlot("SummonerDot");
@@ -67,6 +70,10 @@ namespace LaBaguette_XinZhao
             WelcomeMessage();
         }
 
+
+        /////////////////////////////////////////
+        //            MENU ASSEMBLY            //
+        /////////////////////////////////////////
         private static void AssemblyMenu()
         {
             Config = new Menu("LaBaguette XinZhao", ChampionName, true);
@@ -78,17 +85,40 @@ namespace LaBaguette_XinZhao
             TargetSelector.AddToMenu(TargetSelectorMenu);
             Config.AddSubMenu(TargetSelectorMenu);
 
-            /* [ Combo ] */
-            Config.AddSubMenu(new Menu("Combo", "Combo"));
-            Config.SubMenu("Combo").AddItem(new MenuItem("ComboUseQ", "Use Q").SetValue(true));
-            Config.SubMenu("Combo").AddItem(new MenuItem("ComboUseW", "Use W").SetValue(true));
-            Config.SubMenu("Combo").AddItem(new MenuItem("ComboUseE", "Use E").SetValue(true));
-            Config.SubMenu("Combo").AddItem(new MenuItem("EMinRange", "Min. E Range")
-                .SetValue(new Slider(Q.Range, 200, Q.Range)));
-            Config.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo!")
-                .SetValue(new KeyBind("Z".ToCharArray()[0], KeyBindType.Press)));
+            /////////////////////////
+            //      MENU COMBO     //
+            /////////////////////////
+            Config.AddSubMenu(new Menu("BasicCombo", "BasicCombo"));
 
-            /* [ Lane Clear ] */
+                /////////////////////////
+                //    SUBMENU COMBO    //
+                //     INSTAB COMBO    //
+                /////////////////////////
+                Config.AddSubMenu(new Menu("InstaBCombo", "InstaBCombo"));
+                    Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboUseQ", "Use Q").SetValue(true));
+                    Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboUseW", "Use W").SetValue(true));
+                    Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboUseE", "Use E").SetValue(true));
+                    Config.SubMenu("BasicCombo").AddItem(new MenuItem("EMinRange", "Min. E Range")
+                        .SetValue(new Slider(Q.Range, 200, Q.Range)));
+                    Config.SubMenu("BasicCombo").AddItem(new MenuItem("ComboActive", "Combo!")
+                        .SetValue(new KeyBind("Space".ToCharArray()[0], KeyBindType.Press)));
+
+                /////////////////////////
+                //    SUBMENU COMBO    //
+                //     BASIC COMBO     //
+                /////////////////////////
+                Config.AddSubMenu(new Menu("InstaBCombo", "InstaBCombo"));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboPreQ", "PreQ").SetValue(true));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboUseW", "Use W").SetValue(true));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboUseE", "Use E").SetValue(true));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("EMinRange", "Min. E Range")
+                            .SetValue(new Slider(Q.Range, 200, Q.Range)));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboActive", "InstaBumpCombo!")
+                            .SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Press)));
+
+            /////////////////////////
+            //      MENU COMBO     //
+            /////////////////////////
             Config.AddSubMenu(new Menu("LaneClear", "LaneClear"));
             Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseQ", "Use Q").SetValue(false));
             Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearUseW", "Use W").SetValue(false));
@@ -98,7 +128,9 @@ namespace LaBaguette_XinZhao
             Config.SubMenu("LaneClear").AddItem(new MenuItem("LaneClearActive", "LaneClear!")
                 .SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
-            /* [ Jungling Farm ] */
+            /////////////////////////
+            //      MENU COMBO     //
+            /////////////////////////
             Config.AddSubMenu(new Menu("JungleFarm", "JungleFarm"));
             Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseQ", "Use Q").SetValue(true));
             Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmUseW", "Use W").SetValue(false));
@@ -108,7 +140,9 @@ namespace LaBaguette_XinZhao
             Config.SubMenu("JungleFarm").AddItem(new MenuItem("JungleFarmActive", "JungleFarm!")
                 .SetValue(new KeyBind("V".ToCharArray()[0], KeyBindType.Press)));
 
-            /* [ Drawing ] */
+            /////////////////////////
+            //     MENU DRAWING    //
+            /////////////////////////
             Config.AddSubMenu(new Menu("Drawings", "Drawings"));
             Config.SubMenu("Drawings")
                 .AddItem(new MenuItem("DrawQRange", "Q Range").SetValue(new Circle(false, Color.PowderBlue)));
@@ -119,38 +153,141 @@ namespace LaBaguette_XinZhao
             Config.SubMenu("Drawings")
                 .AddItem(new MenuItem("DrawThrown", "Can be thrown enemy").SetValue(new Circle(false, Color.PowderBlue)));
 
-            /* [  Extras -> Use Items ] */
+            /////////////////////////
+            //      MENU EXTRA     //
+            /////////////////////////
             MenuExtras = new Menu("Extras", "Extras");
             Config.AddSubMenu(MenuExtras);
             MenuExtras.AddItem(new MenuItem("InterruptSpells", "Interrupt Spells").SetValue(true));
 
-            /* [  Extras -> Use Items ] */
-            var menuUseItems = new Menu("Use Items", "menuUseItems");
-            MenuExtras.AddSubMenu(menuUseItems);
+                /////////////////////////
+                //    SUBMENU EXTRA    //
+                /////////////////////////
+                var menuUseItems = new Menu("Use Items", "menuUseItems");
+                MenuExtras.AddSubMenu(menuUseItems);
 
-            /* [ Extras -> Use Items -> Targeted Items ] */
-            MenuTargetedItems = new Menu("Targeted Items", "menuTargetItems");
-            menuUseItems.AddSubMenu(MenuTargetedItems);
-            MenuTargetedItems.AddItem(new MenuItem("item3153", "Blade of the Ruined King").SetValue(true));
-            MenuTargetedItems.AddItem(new MenuItem("item3143", "Randuin's Omen").SetValue(true));
-            MenuTargetedItems.AddItem(new MenuItem("item3144", "Bilgewater Cutlass").SetValue(true));
-            MenuTargetedItems.AddItem(new MenuItem("item3146", "Hextech Gunblade").SetValue(true));
-            MenuTargetedItems.AddItem(new MenuItem("item3184", "Entropy ").SetValue(true));
+                /////////////////////////
+                //    SUBMENU EXTRA    //
+                //   TARGETED ITEMS    //
+                /////////////////////////
+                MenuTargetedItems = new Menu("Targeted Items", "menuTargetItems");
+                menuUseItems.AddSubMenu(MenuTargetedItems);
+                MenuTargetedItems.AddItem(new MenuItem("item3153", "Blade of the Ruined King").SetValue(true));
+                MenuTargetedItems.AddItem(new MenuItem("item3143", "Randuin's Omen").SetValue(true));
+                MenuTargetedItems.AddItem(new MenuItem("item3144", "Bilgewater Cutlass").SetValue(true));
+                MenuTargetedItems.AddItem(new MenuItem("item3146", "Hextech Gunblade").SetValue(true));
+                MenuTargetedItems.AddItem(new MenuItem("item3184", "Entropy ").SetValue(true));
 
-            /* [ Extras -> Use Items -> AOE Items ] */
-            MenuNonTargetedItems = new Menu("AOE Items", "menuNonTargetedItems");
-            menuUseItems.AddSubMenu(MenuNonTargetedItems);
-            MenuNonTargetedItems.AddItem(new MenuItem("item3180", "Odyn's Veil").SetValue(true));
-            MenuNonTargetedItems.AddItem(new MenuItem("item3131", "Sword of the Divine").SetValue(true));
-            MenuNonTargetedItems.AddItem(new MenuItem("item3074", "Ravenous Hydra").SetValue(true));
-            MenuNonTargetedItems.AddItem(new MenuItem("item3142", "Youmuu's Ghostblade").SetValue(true));
+                /////////////////////////
+                //    SUBMENU EXTRA    //
+                //   TARGETED ITEMS    //
+                /////////////////////////
+                MenuNonTargetedItems = new Menu("AOE Items", "menuNonTargetedItems");
+                menuUseItems.AddSubMenu(MenuNonTargetedItems);
+                MenuNonTargetedItems.AddItem(new MenuItem("item3180", "Odyn's Veil").SetValue(true));
+                MenuNonTargetedItems.AddItem(new MenuItem("item3131", "Sword of the Divine").SetValue(true));
+                MenuNonTargetedItems.AddItem(new MenuItem("item3074", "Ravenous Hydra").SetValue(true));
+                MenuNonTargetedItems.AddItem(new MenuItem("item3142", "Youmuu's Ghostblade").SetValue(true));
 
-            new PotionManager();
-            new AssassinManager();
-            Config.AddToMainMenu();
+                new PotionManager();
+                new AssassinManager();
+                Config.AddToMainMenu();
         }
 
-        private static void WelcomeMessage()
+
+
+        /////////////////////////////////////////
+        //          INSTABUMP COMBO            //
+        /////////////////////////////////////////
+        public static void InstaBCombo()
+        {
+            var t = GetEnemy(Q.Range, TargetSelector.DamageType.Magical);
+            var useQ = Config.Item("ComboPreQ").GetValue<bool>();
+            var useW = Config.Item("ComboUseW").GetValue<bool>();
+            var useE = Config.Item("ComboUseE").GetValue<bool>();
+
+            if (useQ && t.IsValidTarget(E.Range) && Q.IsReady())
+                Q.Cast();
+
+            if (useW && t.IsValidTarget(E.Range) && W.IsReady())
+                W.Cast();
+
+            if (useE && t.IsValidTarget(E.Range) && E.IsReady())
+            {
+                var eMinRange = Config.Item("EMinRange").GetValue<Slider>().Value;
+                if (ObjectManager.Player.Distance(t) >= eMinRange)
+                    E.CastOnUnit(t);
+            }
+
+            if (Player.Distance(t) <= E.Range)
+                UseItems(t);
+
+            if (Player.Distance(t) <= E.Range)
+                UseItems(t, true);
+
+            if (IgniteSlot != SpellSlot.Unknown && Player.Spellbook.CanUseSpell(IgniteSlot) == SpellState.Ready)
+            {
+                if (Player.GetSummonerSpellDamage(t, Damage.SummonerSpell.Ignite) >= t.Health)
+                {
+                    Player.Spellbook.CastSpell(IgniteSlot, t);
+                }
+            }
+
+            if (Tiamat.IsReady() && Player.Distance(t) <= Tiamat.Range)
+                Tiamat.Cast();
+
+            if (Hydra.IsReady() && Player.Distance(t) <= Hydra.Range)
+                Tiamat.Cast();
+        }
+
+
+        /////////////////////////////////////////
+        //             BASIC COMBO             //
+        /////////////////////////////////////////
+        public static void BasicCombo()
+        {
+            var t = GetEnemy(Q.Range, TargetSelector.DamageType.Magical);
+
+            var useQ = Config.Item("ComboUseQ").GetValue<bool>();
+            var useW = Config.Item("ComboUseW").GetValue<bool>();
+            var useE = Config.Item("ComboUseE").GetValue<bool>();
+
+            if (useQ && t.IsValidTarget(E.Range) && Q.IsReady())
+                Q.Cast();
+
+            if (useW && t.IsValidTarget(E.Range) && W.IsReady())
+                W.Cast();
+
+            if (useE && t.IsValidTarget(E.Range) && E.IsReady())
+            {
+                var eMinRange = Config.Item("EMinRange").GetValue<Slider>().Value;
+                if (ObjectManager.Player.Distance(t) >= eMinRange)
+                    E.CastOnUnit(t);
+            }
+
+            if (Player.Distance(t) <= E.Range)
+                UseItems(t);
+
+            if (Player.Distance(t) <= E.Range)
+                UseItems(t, true);
+
+            if (IgniteSlot != SpellSlot.Unknown &&
+                Player.Spellbook.CanUseSpell(IgniteSlot) == SpellState.Ready)
+            {
+                if (Player.GetSummonerSpellDamage(t, Damage.SummonerSpell.Ignite) >= t.Health)
+                {
+                    Player.Spellbook.CastSpell(IgniteSlot, t);
+                }
+            }
+
+            if (Tiamat.IsReady() && Player.Distance(t) <= Tiamat.Range)
+                Tiamat.Cast();
+
+            if (Hydra.IsReady() && Player.Distance(t) <= Hydra.Range)
+                Tiamat.Cast();
+        }
+
+        private static void MessageBienvenue()
         {
             Game.PrintChat(String.Format("<font color='#0000FF'>La </font> <font color='#FFFFFF'>Bagu </font> <font color='#FFFFFF'>ette </font><font color='#FFFFFF'>{0}</font> <font color='#70DBDB'>Loaded!</font>", ChampionName));
         }
