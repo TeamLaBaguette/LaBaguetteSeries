@@ -12,6 +12,4 @@ Members
 <br>
 Assemblies
 ============
-<b>LaBaguette XinZhao v 0.0.0.1:</b> 
-Features : 
-Combo - InSec - ItemUsing
+<b>LaBaguette XinZhao v 0.0.0.3:</b>Features : Combo - InSec - ItemUsing

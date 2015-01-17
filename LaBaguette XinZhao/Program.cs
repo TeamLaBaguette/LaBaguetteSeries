@@ -100,7 +100,7 @@ namespace LaBaguette_XinZhao
                     Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboUseE", "Use E").SetValue(true));
                     Config.SubMenu("BasicCombo").AddItem(new MenuItem("EMinRange", "Min. E Range")
                         .SetValue(new Slider(Q.Range, 200, Q.Range)));
-                    Config.SubMenu("BasicCombo").AddItem(new MenuItem("ComboActive", "Combo!")
+                    Config.SubMenu("BasicCombo").AddItem(new MenuItem("BasicComboActive", "Combo!")
                         .SetValue(new KeyBind("Space".ToCharArray()[0], KeyBindType.Press)));
 
                 /////////////////////////
@@ -108,12 +108,12 @@ namespace LaBaguette_XinZhao
                 //     BASIC COMBO     //
                 /////////////////////////
                 Config.AddSubMenu(new Menu("InstaBCombo", "InstaBCombo"));
-                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboPreQ", "PreQ").SetValue(true));
-                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboUseW", "Use W").SetValue(true));
-                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboUseE", "Use E").SetValue(true));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("InstaBComboPreQ", "PreCharge Q").SetValue(true));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("InstaBComboUseW", "Use W").SetValue(true));
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("InstaBComboUseE", "Use E").SetValue(true));
                     Config.SubMenu("InstaBCombo").AddItem(new MenuItem("EMinRange", "Min. E Range")
                             .SetValue(new Slider(Q.Range, 200, Q.Range)));
-                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("ComboActive", "InstaBumpCombo!")
+                    Config.SubMenu("InstaBCombo").AddItem(new MenuItem("InstaBComboActive", "InstaBumpCombo!")
                             .SetValue(new KeyBind("T".ToCharArray()[0], KeyBindType.Press)));
 
             /////////////////////////
@@ -285,6 +285,57 @@ namespace LaBaguette_XinZhao
                 Tiamat.Cast();
         }
 
+
+        /////////////////////////////////////////
+        //            ON GAME UPDATE           //
+        /////////////////////////////////////////
+        static void Game_OnGameUpdate(EventArgs args)
+        {
+            if (!Orbwalking.CanMove(100)) return;
+
+
+            /////////////////////////
+            //     BASIC COMBO     //
+            /////////////////////////
+
+            //Check InstaBump Combo Bind
+            if (Config.Item("BasicComboActive").GetValue<KeyBind>().Active)
+            {
+                //Execute Basic Combo
+                BasicCombo();
+            }
+
+            /////////////////////////
+            //     INSTAB COMBO    //
+            /////////////////////////
+
+            //Check InstaBump Combo Bind
+            if (Config.Item("InstaBComboActive").GetValue<KeyBind>().Active)
+            {
+                //Execute InstaBump Combo
+                InstaBCombo();
+            }
+
+            /////////////////////////
+            //      LANECLEAR      //
+            /////////////////////////
+            if (Config.Item("LaneClearActive").GetValue<KeyBind>().Active)
+            {
+                var ActualMana = Player.MaxMana / 100 * Config.Item("LaneClearMana").GetValue<Slider>().Value;
+                if (Player.Mana >= ActualMana)
+                    LaneClear();
+            }
+
+            /////////////////////////
+            //      JUNGLEFARM     //
+            /////////////////////////
+            if (Config.Item("JungleFarmActive").GetValue<KeyBind>().Active)
+            {
+                var ActualMana = Player.MaxMana / 100 * Config.Item("JungleFarmMana").GetValue<Slider>().Value;
+                if (Player.Mana >= ActualMana)
+                    JungleFarm();
+            }
+        }
 
         /////////////////////////////////////////
         //            WELCOME MESSAGE          //
